@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "s34EsAVDa6uERV/vyhMgDnsGJz1F9fW34/fxvwXauXk=",
+  "Source": "TicketGenerateAPI",
+  "BasePath": "_content/TicketGenerateAPI",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

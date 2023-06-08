@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "PQ+gSILof7cIfViKDFbHZhFPnTAN1uQ8eM3mh54AtO4=",
+  "Source": "UserLoginManagementApp",
+  "BasePath": "_content/UserLoginManagementApp",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
