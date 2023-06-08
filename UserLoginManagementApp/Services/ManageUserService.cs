@@ -23,22 +23,21 @@ namespace UserLoginManagementApp.Services
             _passwordService = passwordService;
             _tokenService = tokenService;
         }
+
         public async Task<UserDTO> ChangeStatus(UserDTO userDTO)
         {
-            UserDTO user = null;
-            var userData = await _userRepo.Get(userDTO.UserId);
-            if(userData != null)
+            
+            User user = await _userRepo.Get(userDTO.UserId);
+            if(user != null)
+                if (user.Status != "Approved")
+                    user.Status = "Approved";
+            var result= await _userRepo.Update(user);
+            if(result!=null)
             {
-                if (userData.Status != "Approved")
-                {
-                    userData.Status = "Approved";
-
-                    user = new UserDTO();
-                    user.UserId= userData.UserId;
-                    return user;
-                }
+                return userDTO;
             }
             return null;
+
         }
 
         public async Task<UserDTO> Login(UserDTO userDTO)
@@ -65,7 +64,6 @@ namespace UserLoginManagementApp.Services
 
         public async Task<UserDTO> Register(InternDTO intern)
         {
-
             UserDTO user = null;
             var hmac = new HMACSHA512();
             string? generatedPassword = await _passwordService.GeneratePassword(intern);
@@ -83,6 +81,43 @@ namespace UserLoginManagementApp.Services
                 user.Token = _tokenService.GenerateToken(user);
             }
             return user;
+        }
+
+
+        public async Task<User> ChangePassword(InternDTO internDTO)
+        {
+            User user = new User();
+            var hmac = new HMACSHA512();
+            var userIntern = await _userRepo.Get(internDTO.Id);
+            user.UserId = userIntern.UserId;
+            user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(internDTO.PasswordClear ?? "password12")); ;
+            user.PasswordKey = hmac.Key;
+            user.Role = userIntern.Role;
+            user.Status = userIntern.Status;
+
+            var userResult = await _userRepo.Update(user);
+            if (userResult != null)
+            {
+                return user;
+            }
+            return null;
+        }
+
+        public async Task<List<Intern>> GetAllIntern()
+        {
+            List<Intern> interns = new List<Intern>();
+            var allUsers = await _userRepo.GetAll();
+            if (allUsers == null)
+            {
+                return null;
+            }
+            var ids = allUsers.Where(s => s.Role == "Intern").Select(c => c.UserId);
+            foreach (var id in ids)
+            {
+                var intern = await _internRepo.Get(id);
+                interns.Add(intern);
+            }
+            return interns;
 
         }
     }

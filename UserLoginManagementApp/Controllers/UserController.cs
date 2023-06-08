@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using UserLoginManagementApp.Interfaces;
+using UserLoginManagementApp.Models;
 using UserLoginManagementApp.Models.DTOs;
 
 namespace UserLoginManagementApp.Controllers
@@ -14,12 +15,16 @@ namespace UserLoginManagementApp.Controllers
     {
         private readonly IManageUser _manageUser;
 
+
         public UserController(IManageUser manageUser)
         {
             _manageUser = manageUser;
+
         }
 
         [HttpPost("Register")]
+        [ProducesResponseType(typeof(UserDTO), 200)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<UserDTO>> Register(InternDTO intern)
         {
             var result = await _manageUser.Register(intern);
@@ -31,6 +36,8 @@ namespace UserLoginManagementApp.Controllers
         }
 
         [HttpPost("Login")]
+        [ProducesResponseType(typeof(UserDTO), 200)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<UserDTO>> Login(UserDTO userDTO)
         {
             var result = await _manageUser.Login(userDTO);
@@ -43,7 +50,9 @@ namespace UserLoginManagementApp.Controllers
 
 
         [HttpPut("Change Status")]  
-        //[Authorize(Roles ="Admin")]
+        [Authorize(Roles ="Admin")]
+        [ProducesResponseType(typeof(UserDTO), 200)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<UserDTO>> ChangeStatus(UserDTO userDTO)
         {
             var result = await _manageUser.ChangeStatus(userDTO);
@@ -53,6 +62,29 @@ namespace UserLoginManagementApp.Controllers
             }
             return BadRequest("Unable to change Status");
 
+        }
+
+        [HttpGet("Get All Intern")]
+        [Authorize(Roles = "Admin")]
+        [ProducesResponseType(typeof(List<Intern>), 200)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<List<Intern>>> GetAllInterns()
+        {
+            var result = await _manageUser.GetAllIntern();
+            if(result != null)
+                return Ok(result);
+            return BadRequest("Nooo intern");
+        }
+
+        [HttpPut ("Change Password")]
+        [ProducesResponseType(typeof(User), 200)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<User>> ChangePassword(InternDTO internDTO)
+        {
+            var result = await _manageUser.ChangePassword(internDTO);
+            if (result != null)
+                return Ok(result);
+            return BadRequest("Unable to change password");
         }
     }
 }

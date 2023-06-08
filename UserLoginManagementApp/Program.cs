@@ -1,4 +1,7 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using UserLoginManagementApp.Interfaces;
 using UserLoginManagementApp.Models;
 using UserLoginManagementApp.Services;
@@ -30,6 +33,19 @@ builder.Services.AddScoped<IGeneratePassword,GeneratePasswordService>();
 builder.Services.AddScoped<IGenerateToken, GenerateTokenService>();
 builder.Services.AddScoped<IManageUser,ManageUserService>();
 
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["TokenKey"])),
+            ValidateIssuer = false,
+            ValidateAudience = false
+        };
+    });
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -42,6 +58,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseCors("AngularCORS");
+
 
 app.UseAuthentication();
 app.UseAuthorization();

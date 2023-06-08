@@ -47,7 +47,7 @@ namespace UserLoginManagementApp.Services
             return user;
         }
 
-        public async Task<ICollection<User>?> GetAll()
+        public async Task<IList<User>?> GetAll()
         {
             var users = await _context.Users.ToListAsync();
             if (users.Count > 0)
@@ -58,16 +58,19 @@ namespace UserLoginManagementApp.Services
         public async Task<User?> Update(User item)
         {
             var user = await Get(item.UserId);
+
             if (user != null)
             {
-                user.Role = item.Role;
-                user.PasswordHash = item.PasswordHash;
                 user.PasswordKey = item.PasswordKey;
+                user.PasswordHash= item.PasswordHash;
+                user.Role= item.Role;
                 user.Status = item.Status;
                 await _context.SaveChangesAsync();
                 return user;
+
             }
             return null;
         }
+
     }
 }

@@ -1,4 +1,5 @@
-﻿using UserLoginManagementApp.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using UserLoginManagementApp.Interfaces;
 using UserLoginManagementApp.Models;
 
 namespace UserLoginManagementApp.Services
@@ -23,12 +24,15 @@ namespace UserLoginManagementApp.Services
             throw new NotImplementedException();
         }
 
-        public Task<Intern?> Get(int key)
+        public async Task<Intern?> Get(int key)
         {
-            throw new NotImplementedException();
+            var intern = await _context.Interns.FirstOrDefaultAsync(s => s.Id == key);
+            if (intern == null)
+                return null;
+            return intern;
         }
 
-        public Task<ICollection<Intern>?> GetAll()
+        public Task<IList<Intern>?> GetAll()
         {
             throw new NotImplementedException();
         }
