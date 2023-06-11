@@ -26,7 +26,7 @@ builder.Services.AddDbContext<UserContext>(opts =>
 {
     opts.UseSqlServer(builder.Configuration.GetConnectionString("myConn"));
 });
-
+    
 builder.Services.AddScoped<IRepo<int, User>, UserRepo>();
 builder.Services.AddScoped<IRepo<int, Intern>, InternRepo>();
 builder.Services.AddScoped<IGeneratePassword,GeneratePasswordService>();

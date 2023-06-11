@@ -79,9 +79,9 @@ namespace UserLoginManagementApp.Controllers
         [HttpPut ("Change Password")]
         [ProducesResponseType(typeof(User), 200)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<User>> ChangePassword(InternDTO internDTO)
+        public async Task<ActionResult<User>> ChangePassword(PasswordDTO passwordDTO)
         {
-            var result = await _manageUser.ChangePassword(internDTO);
+            var result = await _manageUser.ChangePassword(passwordDTO);
             if (result != null)
                 return Ok(result);
             return BadRequest("Unable to change password");

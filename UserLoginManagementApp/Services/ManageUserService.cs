@@ -84,13 +84,13 @@ namespace UserLoginManagementApp.Services
         }
 
 
-        public async Task<User> ChangePassword(InternDTO internDTO)
+        public async Task<User> ChangePassword(PasswordDTO passwordDTO)
         {
             User user = new User();
             var hmac = new HMACSHA512();
-            var userIntern = await _userRepo.Get(internDTO.Id);
+            var userIntern = await _userRepo.Get(passwordDTO.UserId);
             user.UserId = userIntern.UserId;
-            user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(internDTO.PasswordClear ?? "password12")); ;
+            user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(passwordDTO.Password ?? "password12")); 
             user.PasswordKey = hmac.Key;
             user.Role = userIntern.Role;
             user.Status = userIntern.Status;
@@ -98,6 +98,8 @@ namespace UserLoginManagementApp.Services
             var userResult = await _userRepo.Update(user);
             if (userResult != null)
             {
+                user.PasswordHash = null;
+                user.PasswordKey = null;
                 return user;
             }
             return null;

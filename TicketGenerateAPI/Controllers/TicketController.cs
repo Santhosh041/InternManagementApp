@@ -22,6 +22,9 @@ namespace TicketGenerateAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<Ticket>>AddTicket(Ticket ticket)
         {
+            ticket.IssueDate = DateTime.Now;
+            ticket.Status = "Pending";
+            ticket.Priority = 1;
             var addTicket = await _repo.Add(ticket);
             if (addTicket != null)
             { 
