@@ -1,0 +1,9 @@
+<p>login works!</p>
+    <div class="mb-3">
+        <label class="form-control">User ID</label>
+        <input class="form-control" type="number" placeholder="Enter USer ID" [(ngModel)]="userDTO.userId">
+ 
+        <label for="login-password" class="form-label">Password</label>
+        <input type="password" class="form-control" id="login-password" placeholder="Enter your password" [(ngModel)]="userDTO.password">
+    </div>
+    <button type="submit" class="btn btn-primary" (click)="Login()">Login</button>

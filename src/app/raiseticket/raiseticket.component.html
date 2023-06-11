@@ -1,0 +1,32 @@
+
+<!-- <div [formGroup]="myForm" >
+
+    <label class="form-control">Title</label>
+    <input formControlName="heading" type="text" class="form-control" [(ngModel)]="ticket.Title" >
+    <span class="alert alert-danger" *ngIf="heading.invalid && heading.touched">
+        <span *ngIf="heading.errors['titleError']">
+            {{heading.errors['titleError']}}
+        </span>
+    </span>
+    
+    <label class="form-control">Description</label>
+    <textarea formControlName="description" class="form-control" rows="3" cols="20" [(ngModel)]="ticket.Description"></textarea>
+    <span class="alert alert-danger" *ngIf="description.invalid && description.touched">
+        description cannot be empty
+    </span>
+    
+    <button class="btn btn-success" (click)="raiseTicket()">Create ticket</button>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <button class="btn btn-danger" type="reset">Cancel</button>
+</div>
+ -->
+
+ <div class="mb-3">
+    <label class="form-control">Title </label>
+    <input class="form-control" type="text" placeholder="Enter USer ID" [(ngModel)]="ticket.Title">
+
+    <label for="description" class="form-label">Description</label>
+    <br>
+<textarea name="description" id="description" cols="30" rows="5" [(ngModel)]="ticket.Description"></textarea>
+</div>
+<button type="submit" class="btn btn-primary" (click)="raiseTicket()">Raise Ticket</button>
