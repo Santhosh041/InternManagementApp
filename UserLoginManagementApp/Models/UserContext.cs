@@ -12,6 +12,7 @@ namespace UserLoginManagementApp.Models
         }
         public DbSet<User> Users { get; set; }
         public DbSet<Intern> Interns { get; set; }
+        public DbSet<Login> Logins { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Intern>().Property(i => i.Id).ValueGeneratedNever();

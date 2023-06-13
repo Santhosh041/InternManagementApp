@@ -1,5 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
+using TicketGenerateAPI.Interfaces;
 using TicketGenerateAPI.Models;
 using TicketGenerateAPI.Services;
 
@@ -7,11 +11,12 @@ namespace TicketGenerateAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors("AngularCORS")]
     public class TicketController : ControllerBase
     {
-        private readonly TicketRepo _repo;
+        private readonly IRepo<Ticket, int> _repo;
 
-        public TicketController(TicketRepo repo) 
+        public TicketController(IRepo<Ticket,int> repo) 
         {
             _repo=repo;
         }
@@ -24,7 +29,6 @@ namespace TicketGenerateAPI.Controllers
         {
             ticket.IssueDate = DateTime.Now;
             ticket.Status = "Pending";
-            ticket.Priority = 1;
             var addTicket = await _repo.Add(ticket);
             if (addTicket != null)
             { 
@@ -48,6 +52,7 @@ namespace TicketGenerateAPI.Controllers
         }
 
         [HttpGet("Get All Ticket")]
+        [Authorize(Roles = "Admin")]
         [ProducesResponseType(typeof(Ticket), 200)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<ICollection<Ticket>>> GetAllTicket()
@@ -60,7 +65,20 @@ namespace TicketGenerateAPI.Controllers
             return NotFound("Unable to find tickets");
         }
 
-        [HttpDelete("Delete Ticket")]
+        [HttpGet("Get All Ticket For Interns")]
+        [ProducesResponseType(typeof(Ticket), 200)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<ICollection<Ticket>>> GetAllTicketIntern(int id)
+        {
+            var getAllTickets = await _repo.GetUsersRecords(id);
+            if (getAllTickets != null)
+            {
+                return Ok(getAllTickets);
+            }
+            return NotFound("Unable to find tickets");
+        }
+
+        [HttpPut("Delete Ticket")]
         [ProducesResponseType(typeof(Ticket), 200)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<Ticket>> DeleteTicket(int id)

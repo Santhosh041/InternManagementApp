@@ -12,8 +12,8 @@ using TicketGenerateAPI.Models;
 namespace TicketGenerateAPI.Migrations
 {
     [DbContext(typeof(TicketContext))]
-    [Migration("20230607110707_init")]
-    partial class init
+    [Migration("20230613161736_two")]
+    partial class two
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,13 +26,19 @@ namespace TicketGenerateAPI.Migrations
 
             modelBuilder.Entity("TicketGenerateAPI.Models.Solution", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("SolutionId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SolutionId"), 1L, 1);
 
                     b.Property<int>("AdminID")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("ProvisionDate")
+                    b.Property<int?>("ID")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ProvisionDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("TicketID")
@@ -41,7 +47,9 @@ namespace TicketGenerateAPI.Migrations
                     b.Property<string>("solution")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("SolutionId");
+
+                    b.HasIndex("ID");
 
                     b.ToTable("Solution");
                 });
@@ -54,17 +62,20 @@ namespace TicketGenerateAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
 
+                    b.Property<string>("Category")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("InternId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("IssueDate")
+                    b.Property<DateTime?>("IssueDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("Priority")
-                        .HasColumnType("int");
+                    b.Property<string>("Priority")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Status")
                         .HasColumnType("nvarchar(max)");
@@ -81,9 +92,7 @@ namespace TicketGenerateAPI.Migrations
                 {
                     b.HasOne("TicketGenerateAPI.Models.Ticket", "Ticket")
                         .WithMany()
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ID");
 
                     b.Navigation("Ticket");
                 });

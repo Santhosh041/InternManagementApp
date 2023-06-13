@@ -1,5 +1,10 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using TicketGenerateAPI.Interfaces;
 using TicketGenerateAPI.Models;
+using TicketGenerateAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,10 +15,35 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddCors(opts =>
+{
+    opts.AddPolicy("AngularCORS", options =>
+    {
+        options.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
+    });
+});
+
+builder.Services.AddScoped<IRepo<Ticket, int>, TicketRepo>();
+builder.Services.AddScoped<IRepo<Solution, int>, SolutionRepo>();
+
 builder.Services.AddDbContext<TicketContext>(opts =>
 {
     opts.UseSqlServer(builder.Configuration.GetConnectionString("myConn"));
 });
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["TokenKey"])),
+            ValidateIssuer = false,
+            ValidateAudience = false
+        };
+    });
+
+
 
 var app = builder.Build();
 
@@ -24,6 +54,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors("AngularCORS");
+
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

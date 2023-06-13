@@ -18,9 +18,10 @@ namespace TicketGenerateAPI.Migrations
                     InternId = table.Column<int>(type: "int", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IssueDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IssueDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Priority = table.Column<int>(type: "int", nullable: true)
+                    Category = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Priority = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -31,22 +32,28 @@ namespace TicketGenerateAPI.Migrations
                 name: "Solution",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false),
+                    SolutionId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     TicketID = table.Column<int>(type: "int", nullable: false),
+                    ID = table.Column<int>(type: "int", nullable: true),
                     AdminID = table.Column<int>(type: "int", nullable: false),
                     solution = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ProvisionDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    ProvisionDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Solution", x => x.Id);
+                    table.PrimaryKey("PK_Solution", x => x.SolutionId);
                     table.ForeignKey(
-                        name: "FK_Solution_Ticket_Id",
-                        column: x => x.Id,
+                        name: "FK_Solution_Ticket_ID",
+                        column: x => x.ID,
                         principalTable: "Ticket",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "ID");
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Solution_ID",
+                table: "Solution",
+                column: "ID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

@@ -12,28 +12,36 @@ namespace UserLoginManagementApp.Services
         private readonly IRepo<int, Intern> _internRepo;
         private readonly IGeneratePassword _passwordService;
         private readonly IGenerateToken _tokenService;
+        private readonly ILogRepo _logRepo;
 
         public ManageUserService(IRepo<int, User> userRepo,
             IRepo<int, Intern> internRepo,
             IGeneratePassword passwordService,
-            IGenerateToken tokenService)
+            IGenerateToken tokenService,
+            ILogRepo logRepo)
         {
             _userRepo = userRepo;
             _internRepo = internRepo;
             _passwordService = passwordService;
             _tokenService = tokenService;
+            _logRepo= logRepo;
         }
 
-        public async Task<UserDTO> ChangeStatus(UserDTO userDTO)
+        public async Task<UserDTO> ChangeStatus(int internID)
         {
-            
-            User user = await _userRepo.Get(userDTO.UserId);
+            UserDTO userDTO ;
+            User user = await _userRepo.Get(internID);
             if(user != null)
                 if (user.Status != "Approved")
                     user.Status = "Approved";
+                else
+                    user.Status = "Not Approved";
             var result= await _userRepo.Update(user);
             if(result!=null)
             {
+                userDTO = new UserDTO();
+                userDTO.UserId=result.UserId;
+                userDTO.Role=result.Role;
                 return userDTO;
             }
             return null;
@@ -105,6 +113,13 @@ namespace UserLoginManagementApp.Services
             return null;
         }
 
+        public async Task<Intern> GetIntern(int id)
+        {
+            var intern = await _internRepo.Get(id);
+            if(intern != null)
+                return intern;
+            return null;
+        }
         public async Task<List<Intern>> GetAllIntern()
         {
             List<Intern> interns = new List<Intern>();
@@ -121,6 +136,12 @@ namespace UserLoginManagementApp.Services
             }
             return interns;
 
+        }
+
+        public async Task<Login> SetLogin(Login login)
+        {
+            var result = await _logRepo.Add(login);
+            return result;
         }
     }
 }

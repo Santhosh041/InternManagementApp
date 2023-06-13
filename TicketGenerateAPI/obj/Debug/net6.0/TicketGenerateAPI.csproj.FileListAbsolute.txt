@@ -66,3 +66,4 @@ D:\KANINI\.NET\API-Project\UserManagementSolution\TicketGenerateAPI\obj\Debug\ne
 D:\KANINI\.NET\API-Project\UserManagementSolution\TicketGenerateAPI\obj\Debug\net6.0\TicketGenerateAPI.pdb
 D:\KANINI\.NET\API-Project\UserManagementSolution\TicketGenerateAPI\obj\Debug\net6.0\TicketGenerateAPI.genruntimeconfig.cache
 D:\KANINI\.NET\API-Project\UserManagementSolution\TicketGenerateAPI\obj\Debug\net6.0\ref\TicketGenerateAPI.dll
+D:\KANINI\.NET\API-Project\UserManagementSolution\TicketGenerateAPI\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

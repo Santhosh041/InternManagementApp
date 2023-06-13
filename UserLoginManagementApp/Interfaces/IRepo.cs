@@ -7,5 +7,6 @@
         public Task<T?> Get(K key);
         public Task<T?> Update(T item);
         public Task<IList<T>?> GetAll();
+
     }
 }

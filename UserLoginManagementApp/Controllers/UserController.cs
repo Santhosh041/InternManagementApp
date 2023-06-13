@@ -53,9 +53,10 @@ namespace UserLoginManagementApp.Controllers
         [Authorize(Roles ="Admin")]
         [ProducesResponseType(typeof(UserDTO), 200)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<UserDTO>> ChangeStatus(UserDTO userDTO)
+        public async Task<ActionResult<UserDTO>> ChangeStatus(UserIdDTO ID)
         {
-            var result = await _manageUser.ChangeStatus(userDTO);
+            int internID = ID.id;
+            var result = await _manageUser.ChangeStatus(internID);
             if (result != null)
             {
                 return Ok(result);
@@ -76,6 +77,17 @@ namespace UserLoginManagementApp.Controllers
             return BadRequest("Nooo intern");
         }
 
+        [HttpGet("Get Profile")]
+        [ProducesResponseType(typeof(List<Intern>), 200)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<Intern>> GetUser(int id)
+        {
+            var result = await _manageUser.GetIntern(id);
+            if (result != null)
+                return Ok(result);
+            return BadRequest("Nooo intern");
+        }
+
         [HttpPut ("Change Password")]
         [ProducesResponseType(typeof(User), 200)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -85,6 +97,19 @@ namespace UserLoginManagementApp.Controllers
             if (result != null)
                 return Ok(result);
             return BadRequest("Unable to change password");
+        }
+
+        [HttpPost("LogIn Time")]
+        [ProducesResponseType(typeof(Login), 200)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<UserDTO>> LoginTime(Login item)
+        {
+            var result = await _manageUser.SetLogin(item);
+            if (result != null)
+            {
+                return Ok(result);
+            }
+            return BadRequest("Something Error");
         }
     }
 }

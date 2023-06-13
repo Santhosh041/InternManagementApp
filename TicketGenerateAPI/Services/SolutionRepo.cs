@@ -34,7 +34,7 @@ namespace TicketGenerateAPI.Services
 
         public async Task<Solution> Get(int key)
         {
-            var solution = await _context.Solution.FirstOrDefaultAsync(s=>s.Id== key);
+            var solution = await _context.Solution.FirstOrDefaultAsync(s=>s.SolutionId== key);
             if (solution != null)
                 return solution;
             return null;
@@ -46,9 +46,14 @@ namespace TicketGenerateAPI.Services
             return null;
         }
 
+        public Task<ICollection<Solution>?> GetUsersRecords(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<Solution> Update(Solution item)
         {
-            var solution = await Get(item.Id);
+            var solution = await Get(item.SolutionId);
             if(solution != null)
             {
                 solution.AdminID= item.AdminID;

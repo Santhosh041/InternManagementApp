@@ -14,6 +14,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 builder.Services.AddCors(opts =>
 {
     opts.AddPolicy("AngularCORS", options =>
@@ -29,9 +30,11 @@ builder.Services.AddDbContext<UserContext>(opts =>
     
 builder.Services.AddScoped<IRepo<int, User>, UserRepo>();
 builder.Services.AddScoped<IRepo<int, Intern>, InternRepo>();
+builder.Services.AddScoped<ILogRepo, LogInRepo>();
 builder.Services.AddScoped<IGeneratePassword,GeneratePasswordService>();
 builder.Services.AddScoped<IGenerateToken, GenerateTokenService>();
 builder.Services.AddScoped<IManageUser,ManageUserService>();
+
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>

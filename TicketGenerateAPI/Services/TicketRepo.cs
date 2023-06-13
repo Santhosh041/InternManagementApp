@@ -26,8 +26,8 @@ namespace TicketGenerateAPI.Services
             var ticket =await Get(key);
             if (ticket != null)
             {
-                _context.Ticket.Remove(ticket);
-                await _context.SaveChangesAsync();
+                ticket.Status = "Deleted";
+                ticket = await Update(ticket);
                 return ticket;
             }
             return null;
@@ -48,16 +48,19 @@ namespace TicketGenerateAPI.Services
             return tickets;
         }
 
+        public async Task<ICollection<Ticket>?> GetUsersRecords(int id)
+        {
+            var tickets=await _context.Ticket.Where(s=>s.ID== id).ToListAsync();
+            return tickets;
+        }
+
         public async Task<Ticket> Update(Ticket item)
         {
             var ticket =await Get(item.ID);
             if (ticket != null)
             {
-                ticket.Title = item.Title;
-                ticket.Description = item.Description;
-                ticket.IssueDate = item.IssueDate;
                 ticket.Status = item.Status;
-                ticket.Priority = item.Priority;
+                await _context.SaveChangesAsync();
                 return ticket;
             }
             return null;
