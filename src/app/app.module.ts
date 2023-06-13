@@ -12,6 +12,14 @@ import { RaiseticketComponent } from './raiseticket/raiseticket.component';
 import { RaiseTicketService } from './service/raise.ticket';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { ChangePasswordService } from './service/change.password';
+import { GetInternsComponent } from './get-interns/get-interns.component';
+import { AdminService } from './service/admin.service';
+import { GetTicketsComponent } from './get-tickets/get-tickets.component';
+import { InternService } from './service/intern.service';
+import { HomepageComponent } from './homepage/homepage.component';
+import { GetProfileComponent } from './get-profile/get-profile.component';
+import { SingleInternComponent } from './single-intern/single-intern.component';
+import { SingleTicketComponent } from './single-ticket/single-ticket.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +27,13 @@ import { ChangePasswordService } from './service/change.password';
     RegisterComponent,
     LoginComponent,
     RaiseticketComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    GetInternsComponent,
+    GetTicketsComponent,
+    HomepageComponent,
+    GetProfileComponent,
+    SingleInternComponent,
+    SingleTicketComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +42,7 @@ import { ChangePasswordService } from './service/change.password';
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [InternRegisterService,RaiseTicketService, ChangePasswordService],
+  providers: [InternRegisterService,RaiseTicketService, ChangePasswordService,AdminService,InternService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

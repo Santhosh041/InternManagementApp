@@ -2,24 +2,21 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: 'app-homepage',
+  templateUrl: './homepage.component.html',
+  styleUrls: ['./homepage.component.css']
 })
-export class AppComponent {
-  
-  title = 'InternManagementApp';
+export class HomepageComponent {
+
   roleStatus:boolean=false
-  role:string=""
-  
- constructor(private router : Router){
 
-   this.role = localStorage.getItem("role")
-   this.router.navigateByUrl('login');
-
+  constructor(private router:Router){
+    if(localStorage.getItem("role")=="Admin"){
+      this.roleStatus=true
+    }
   }
 
-
+  
   getInterns(){
     this.router.navigateByUrl('getInterns')
   }
@@ -34,15 +31,16 @@ export class AppComponent {
     this.router.navigateByUrl('profile')
   }
   raiseTicket(){
-
+    this.router.navigateByUrl('raiseTicket')
   }
   getTicketDetails(){
 
   }
 
   logout(){
+    localStorage.setItem("logout", new Date().toDateString());
     localStorage.setItem("role","");
     this.router.navigateByUrl('login');
   }
-  
+
 }

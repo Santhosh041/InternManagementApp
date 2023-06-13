@@ -1,3 +1,41 @@
+<!-- 
+<div>
+    <table  class="table" class="table table-bordered">
+      <thead>Profile details </thead>
+      <tbody>
+          <tr class="table-success">
+              <td>User Id :</td>
+              <td>{{user.id}}</td>
+          </tr>
+          <tr class="table-success">
+              <td>User Name :</td>
+              <td>{{user.name}}</td>
+          </tr>
+          <tr class="table-success">
+              <td>Date of Birth :</td>
+              <td>{{user.dateOfBirth}}</td>
+          </tr>
+          <tr class="table-success">
+              <td>Age :</td>
+              <td>{{user.age}}</td>
+          </tr>
+          <tr class="table-success">
+              <td>Gender:</td>
+              <td>{{user.gender}}</td>
+          </tr>
+          <tr class="table-success">
+              <td>Phone number :</td>
+              <td>{{user.phone}}</td>
+          </tr>
+          <tr class="table-success">
+              <td>Email :</td>
+              <td>{{user.email}}</td>
+          </tr>
+        
+      </tbody>
+    </table>
+</div> -->
+
 
 <head>
     <meta charset="utf-8" />
@@ -18,6 +56,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
         <div class="container px-4 px-lg-5">
+            
             <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ms-auto my-2 my-lg-0"  *ngIf="roleStatus">
@@ -37,54 +76,53 @@
             </div>
         </div>
     </nav>
-<br>
-    <div class="inbox">
-    <div class="container">
-        <div class="form-box">
-          <div class="mb-3">
-            <label class="form-label">Title</label>
-            <input class="form-control" type="text" placeholder="Enter the Title" [(ngModel)]="ticket.title">
-          </div>
-          
-          <div class="mb-3">
-            <label for="description" class="form-label">Description</label>
-            <input class="form-control" type="text" placeholder="Enter Description" [(ngModel)]="ticket.description">
-          </div>
-
-          <div class="mb-3">
-            <label class="form-label">Category</label>
-            <select class="form-control" class="form-control form-control-lg" (change)="addCategory(category.value)" #category>
-                <option value="SQL Error">SQL Error</option>
-                <option value="System related">System related</option>
-                <option value="Software Reg" >Software Reg</option>
-            </select>
-          </div>
-
-          <div class="mb-3">
-            <label class="form-label">Priority</label>
-            <select class="form-control" class="form-control form-control-lg" (change)="addPriority(priority.value)" #priority>
-                <option value="Within 2 days">Within 1 week</option>
-                <option value="Within 1 week">Within 1 week</option>
-                <option value="Within 20 days" >Within 20 Days</option>
-            </select>
-          </div>
-          
-          <button type="submit" class="btn btn-primary" (click)="raiseTicket()">Raise Ticket</button>
-        </div>
+    <hr><hr>
+    <div class="container d-flex justify-content-center" style="height: 45%;">
+        <table class="table table-bordered" style="width: 25rem;">
+          <tbody>
+            <tr>
+              <th>ID</th>
+              <td>{{user.id}}</td>
+            </tr>
+            <tr>
+              <th>Name</th>
+              <td>{{user.name}}</td>
+            </tr>
+            <tr>
+              <th>Date of Birth</th>
+              <td>{{user.dateOfBirth}}</td>
+            </tr>
+            <tr>
+              <th>Age</th>
+              <td>{{user.age}}</td>
+            </tr>
+            <tr>
+              <th>Gender</th>
+              <td>{{user.gender}}</td>
+            </tr>
+            <tr>
+              <th>Phone Number</th>
+              <td>{{user.phone}}</td>
+            </tr>
+            <tr>
+              <th>Email</th>
+              <td>{{user.email}}</td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align: center;">
+                  <a class="btn btn-danger" (click)="close()">Close</a>
+                </td>
+            </tr> 
+          </tbody>
+        </table>
+        
       </div>
-    </div>
-
-    <br><br><br><br><br><br><br><br><br><br>
-
+      
+      
+      <br><br><br><br><br><br><br><br><br><br><br><br>
    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.js"></script>
     <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
 
 </body>
-
-
-
-
-
- 

@@ -1,0 +1,15 @@
+.GetAll{
+  display: flex;
+  flex-direction: row;
+  justify-content:center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+#mainNav{
+  position: relative;
+}
+body{
+  background-color: #98423787;
+}
+

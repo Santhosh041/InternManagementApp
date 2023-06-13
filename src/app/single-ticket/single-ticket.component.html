@@ -1,0 +1,15 @@
+<div class="card" style="width: 25rem; margin: 7px; margin-top: 7px;">
+    <div class="card-body">
+      <h5 class="card-title">ID: {{ticket.id}}</h5>
+      <h5 class="card-title">Title : {{ticket.title}}</h5>
+      <h5 class="card-title">Description : {{ticket.description}}</h5>
+      <h5 class="card-title">Intern Id : {{ticket.internId}}</h5>
+      <h5 class="card-title">issue Date: {{ticket.issueDate}}</h5>
+      <h5 class="card-title">Status :{{ticket.status}}</h5>
+      <h5 class="card-title">Category : {{ticket.category}}</h5>
+      <h5 class="card-title">Priority :{{ticket.priority}}</h5>
+      <input type="text" *ngIf="solutionStatus" [(ngModel)]="solutionString">
+      <a class="btn btn-success" *ngIf="!solutionStatus" (click)="GetSolution()"> Solution</a>
+      <a class="btn btn-success" *ngIf="solutionStatus"  (click)="SolutionTicket(ticket)"> Submit</a>
+    </div>
+  </div>

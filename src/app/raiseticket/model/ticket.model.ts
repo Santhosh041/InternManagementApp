@@ -2,13 +2,14 @@
 
 export class TicketModel{
     constructor(
-        public ID:number=0,
-        public InternId:number=0,
-        public Title:string="",
-        public Description:string="",
-        public IssueDate:Date=new Date(0),
-        public Status:string="",
-        public Priority:string=""){
+        public id:number=0,
+        public internId:number=0,
+        public title:string="",
+        public description:string="",
+        public issueDate:Date=new Date(0),
+        public status:string="",
+        public priority:string="",
+        public category:string=""){
 
         }
 }

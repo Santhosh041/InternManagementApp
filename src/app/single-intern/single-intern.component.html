@@ -1,0 +1,19 @@
+
+
+<div class="card" style="width: 25rem; margin: 7px; margin-top: 7px;">
+    <div class="card-body">
+      <h5 class="card-title">ID: {{intern.id}}</h5>
+      <h5 class="card-title">Name: {{intern.name}}</h5>
+      <h5 class="card-title">Date of Birth: {{intern.dateOfBirth}}</h5>
+      <h5 class="card-title">Age: {{intern.age}}</h5>
+      <h5 class="card-title">Gender: {{intern.gender}}</h5>
+      <h5 class="card-title">Phone Number:{{intern.phone}}</h5>
+      <h5 class="card-title">Email: {{intern.email}}</h5>
+      <h5 class="card-title">Role :{{intern.phone}}</h5>
+      <h5 class="card-title">Status : {{intern.user.status}}</h5>
+      <a class="btn btn-danger"  (click)="changeStatus(intern.id)"> Change </a>
+      <!-- <ng-template #goto>
+        <a class="btn btn-success">Approved</a>
+      </ng-template> -->
+    </div>
+  </div>
